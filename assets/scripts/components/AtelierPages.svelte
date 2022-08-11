@@ -9,6 +9,10 @@
 
     let buildStatusClass;
 
+    function editPageURL(page){
+        return `/atelier-edit?path=${ encodeURIComponent(page.path) }`
+    }
+
     $: buildStatusClass = status === 'building' ? 'build-ing' : 
         (status === 'built' ? 'build-success' : 'build-error')
 
@@ -35,10 +39,10 @@
         
         <ul class="pages-list">
             {#each pages || [] as page}
-            <li>{ page.path }</li>
+            <li><a href={editPageURL(page)}>{ page.path }</a></li>
             {/each}
         </ul>
-    </div>
+    </div>  
 </section>
 
 <style lang="scss">
@@ -58,5 +62,9 @@
 
 .build-error::after {
     content: "❌";
+}
+
+ul.pages-list{
+    margin-top: 1rem;
 }
 </style>

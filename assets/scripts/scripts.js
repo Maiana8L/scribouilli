@@ -16,6 +16,7 @@ import Login from './components/Login.svelte'
 import CreateProject from './components/CreateProject.svelte'
 import AtelierPages from './components/AtelierPages.svelte'
 import AtelierCreatePage from './components/AtelierCreatePage.svelte'
+import AtelierEditPage from './components/AtelierEditPage.svelte'
 
 
 // @ts-ignore
@@ -81,6 +82,7 @@ function getPagesList(login, repoName, accessToken) {
     })
         .then(
             commits => {
+                // @ts-ignore
                 const firstCommit = commits[0];
                 const {sha} = firstCommit;
 
@@ -281,6 +283,7 @@ page('/atelier-pages', () => {
         json("https://api.github.com/user", {headers: {Authorization: "token " + state.accessToken}})
             .then(result => {
                     console.log("User:", result);
+                    // @ts-ignore
                     store.mutations.setLogin(result.login);
 
                     getPagesList(state.login, state.repoName, state.accessToken)
@@ -293,6 +296,7 @@ page('/atelier-pages', () => {
 
     replaceComponent(atelierPages, mapStateToProps)
 })
+
 
 function makeFileNameFromTitle(title) {
     const fileName = title.replace(/\/|#|\?/g, "-") // replace url confusing characters
@@ -353,6 +357,37 @@ page('/atelier-create-page', () => {
     });
     
     replaceComponent(atelierCreatePage, mapStateToProps)
+})
+
+
+page('/atelier-edit', ({querystring}) => {
+
+    const accessToken = store.state.accessToken;
+
+    const searchParams = new URLSearchParams(querystring)
+    const toEditPath = decodeURIComponent(searchParams.get('path'));
+
+    console.log('toEditPath', toEditPath)
+
+    const fileContent = json(`https://api.github.com/repos/daktary-team/coup-de-pinceau/contents/${toEditPath}`, {
+        headers: {Authorization: "token " + accessToken}
+    })
+
+
+    function mapStateToProps(state){
+        return {
+            page: state.pages.find(p => p.path === toEditPath),
+            fileContent
+        }
+    }
+
+    // @ts-ignore
+    const atelierEditPage = new AtelierEditPage({
+        target: svelteTarget,
+        props: mapStateToProps(store.state)
+    });
+
+    replaceComponent(atelierEditPage, mapStateToProps)
 })
 
 
