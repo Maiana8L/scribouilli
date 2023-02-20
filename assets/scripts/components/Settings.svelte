@@ -7,9 +7,15 @@
 
   export let publishedWebsiteURL;
   export let buildStatus;
+  export let themeColor;
+  export let sha;
 
   const temporaire = () => {
     dispatch("delete-site");
+  };
+
+  const onThemeSave = (e) => {
+    dispatch("update-theme-color", { color: themeColor, sha });
   };
 </script>
 
@@ -18,9 +24,7 @@
     <h2>L'atelier — Paramètres</h2>
     <div class="wrapper white-zone">
       <div>
-        <h3 for="theme-color-select">
-          Couleur principale
-        </h3>
+        <h3 for="theme-color-select">Couleur principale</h3>
 
         <div class="radios-wrapper">
           <div class="radio">
@@ -35,69 +39,39 @@
           </div>
 
           <div class="radio">
-            <input
-              type="radio"
-              name="theme-color-select"
-              id="bleu-outre-mer"
-              value="#07357d"
-            />
+            <input type="radio" name="theme-color-select" id="bleu-outre-mer" value="#07357d" />
             <label for="bleu-outre-mer">Bleu outre-mer</label>
           </div>
 
           <div class="radio">
-            <input
-              type="radio"
-              name="theme-color-select"
-              id="bleu-lagon"
-              value="#0E6270"
-            />
+            <input type="radio" name="theme-color-select" id="bleu-lagon" value="#0E6270" />
             <label for="bleu-lagon">Bleu lagon</label>
           </div>
 
           <div class="radio">
-            <input
-              type="radio"
-              name="theme-color-select"
-              id="violet-aubergine"
-              value="#753785"
-            />
+            <input type="radio" name="theme-color-select" id="violet-aubergine" value="#753785" />
             <label for="violet-aubergine">Violet aubergine</label>
           </div>
 
           <div class="radio">
-            <input
-              type="radio"
-              name="theme-color-select"
-              id="rouge-brique"
-              value="#993B1F"
-            />
+            <input type="radio" name="theme-color-select" id="rouge-brique" value="#993B1F" />
             <label for="rouge-brique">Rouge brique</label>
           </div>
 
           <div class="radio">
-            <input
-              type="radio"
-              name="theme-color-select"
-              id="marron-volcanique"
-              value="#6C5353"
-            />
+            <input type="radio" name="theme-color-select" id="marron-volcanique" value="#6C5353" />
             <label for="marron-volcanique">Marron volcanique</label>
           </div>
 
           <div class="radio">
-            <input
-              type="radio"
-              name="theme-color-select"
-              id="gris-souris"
-              value="#53606C"
-            />
+            <input type="radio" name="theme-color-select" id="gris-souris" value="#53606C" />
             <label for="gris-souris">Gris souris</label>
           </div>
         </div>
       </div>
 
       <div>
-        <button class="btn btn__medium">Changer la couleur</button>
+        <button class="btn btn__medium" on:click={onThemeSave}>Changer la couleur</button>
       </div>
     </div>
 
@@ -113,7 +87,7 @@
         />
         Afficher le bouton de suppression du site
       </label>
-      <button on:click={temporaire} disabled={!enabled} class="btn btn__medium btn__danger"
+      <button on:click={temporaire} disabled={!enabled} class="btn btn__medium"
         >Supprimer le site</button
       >
     </div>
