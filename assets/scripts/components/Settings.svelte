@@ -7,9 +7,15 @@
 
   export let publishedWebsiteURL;
   export let buildStatus;
+  export let themeColor;
+  export let sha;
 
   const temporaire = () => {
     dispatch("delete-site");
+  };
+
+  const onThemeSave = (e) => {
+    dispatch("update-theme-color", { color: themeColor, sha });
   };
 </script>
 
@@ -17,9 +23,9 @@
   <section class="screen" id="settings">
     <h2>L'atelier — Paramètres</h2>
     <div class="theme-select">
-      <!-- <div>
+      <div>
         <label for="theme-color-select">Choisir une couleur de thème pour mon site :</label>
-        <select class="theme-select-bar">
+        <select bind:value={themeColor} class="theme-select-bar">
           <option value="#2a6442">Vert booteille</option>
           <option value="#07357d">Bleu outre-mer</option>
           <option value="#0E6270">Bleu lagon</option>
@@ -30,8 +36,8 @@
         </select>
       </div>
       <div>
-        <button class="btn btn__medium">Sauvegarder</button>
-      </div> -->
+        <button class="btn btn__medium" on:click={onThemeSave}>Sauvegarder</button>
+      </div>
     </div>
     <div class="wrapper delete-zone">
       <label>
@@ -43,11 +49,12 @@
         />
         Afficher le bouton de suppression du site
       </label>
-      <button on:click={temporaire} disabled={!enabled} class="btn btn__medium">Supprimer le site</button>
+      <button on:click={temporaire} disabled={!enabled} class="btn btn__medium"
+        >Supprimer le site</button
+      >
     </div>
   </section>
 </Skeleton>
-
 
 <style lang="scss">
   .theme-select {
