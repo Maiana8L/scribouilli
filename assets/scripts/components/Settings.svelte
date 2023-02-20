@@ -87,7 +87,7 @@
       </div>
 
       <div>
-        <button class="btn btn__medium" on:click={onThemeSave}>Changer la couleur</button>
+        <button class="btn btn__medium" on:click={onThemeSave}>Changer la couleur (~ 2 min.)</button>
       </div>
     </div>
 
