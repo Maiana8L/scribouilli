@@ -162,15 +162,4 @@
       margin-right: 0.5rem;
     }
   }
-
-  .delete-zone {
-    margin-top: 12rem;
-    margin-bottom: 2rem;
-    background: none;
-    border: 4px solid white;
-
-    h3 {
-      margin-top: 0;
-    }
-  }
 </style>
